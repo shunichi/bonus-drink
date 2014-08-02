@@ -1,14 +1,17 @@
 class BonusDrink
   def self.total_count_for(amount)
-    rest = amount
-    bin = 0
     total = 0
-    while rest > 0
-      total += rest
-      bin += rest
-      rest = bin / 3
-      bin %= 3
+    bin = 0
+    while amount > 0
+      total += amount
+      amount, bin = next_state(amount, bin)
     end
     total
   end
+
+  def self.next_state(amount, bin)
+    new_bin = (amount + bin)
+    [new_bin / 3, new_bin % 3]
+  end
+  private_class_method :next_state
 end
